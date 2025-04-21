@@ -23,6 +23,8 @@ steps:
       - "8080"
       - "--region"
       - "us-central1"
+      - "--add-cloudsql-instances"
+      - "e-10-450704:us-central1:tccjaco"
       - "--allow-unauthenticated"
 
 # Log hanya akan disimpan di Google Cloud Logging
