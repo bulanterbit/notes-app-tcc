@@ -1,10 +1,10 @@
 import mysql from "mysql2/promise";
 
 const pool = mysql.createPool({
-  host: "localhost",
   user: "root",
   password: "",
   database: "notes_app",
+  socketPath: "/cloudsql/e-10-450704:us-central1:tccjaco",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
