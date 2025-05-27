@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes (Jaconiah - 123220088)</title>
+    <title>Notes App - Jaconiah (123220088)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -34,88 +34,538 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .note-card {
+            transition: all 0.2s ease-in-out;
+        }
+
+        .note-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
-<body class="bg-gray-50 font-sans">
-    <div class="min-h-screen">
-        <nav class="bg-white shadow-sm">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex">
-                        <div class="flex-shrink-0 flex items-center">
-                            <i class="fas fa-sticky-note text-primary-500 text-2xl mr-2"></i>
-                            <span class="font-bold text-xl text-gray-800">Aplikasi Notes - hehehhe</span>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen font-sans">
+    <!-- Authentication Section -->
+    <div id="auth-section" class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-md w-full">
+            <!-- Login Form -->
+            <div id="login-container" class="bg-white rounded-2xl shadow-xl p-8 fade-in">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-500 rounded-full mb-4">
+                        <i class="fas fa-sticky-note text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900">Welcome Back</h1>
+                    <p class="text-gray-600 mt-2">Sign in to your notes account</p>
+                </div>
+
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label for="login-username"
+                            class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                            <input type="text" id="login-username" name="username" required
+                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200"
+                                placeholder="Enter your username">
                         </div>
+                    </div>
+
+                    <div>
+                        <label for="login-password"
+                            class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input type="password" id="login-password" name="password" required
+                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200"
+                                placeholder="Enter your password">
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-200">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        Don't have an account?
+                        <button id="show-register-btn"
+                            class="font-medium text-primary-600 hover:text-primary-500 transition duration-200">
+                            Create one here
+                        </button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-container" class="bg-white rounded-2xl shadow-xl p-8 fade-in hidden">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-full mb-4">
+                        <i class="fas fa-user-plus text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900">Create Account</h1>
+                    <p class="text-gray-600 mt-2">Join us and start taking notes</p>
+                </div>
+
+                <form id="register-form" class="space-y-6">
+                    <div>
+                        <label for="register-username"
+                            class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                            <input type="text" id="register-username" name="username" required
+                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200"
+                                placeholder="Choose a username">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="register-password"
+                            class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input type="password" id="register-password" name="password" required
+                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200"
+                                placeholder="Create a password">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="register-confirm-password"
+                            class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input type="password" id="register-confirm-password" name="confirm-password" required
+                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200"
+                                placeholder="Confirm your password">
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        Already have an account?
+                        <button id="show-login-btn"
+                            class="font-medium text-primary-600 hover:text-primary-500 transition duration-200">
+                            Sign in here
+                        </button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Auth Message -->
+            <div id="auth-message" class="mt-4 text-center text-sm"></div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app-content" class="hidden min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 flex items-center">
+                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-sticky-note text-white text-sm"></i>
+                            </div>
+                            <span class="font-bold text-xl text-gray-900">Notes App</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span id="user-greeting" class="text-gray-700 font-medium"></span>
+                        <button id="logout-btn"
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-200">
+                            <i class="fas fa-sign-out-alt mr-1"></i>
+                            Logout
+                        </button>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <div class="py-10">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- New Note Card -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-                    <div class="px-6 py-4 bg-gradient-to-r from-primary-500 to-primary-600">
-                        <h2 class="text-lg font-semibold text-white flex items-center">
-                            <i class="fas fa-plus-circle mr-2"></i> Create New Note
-                        </h2>
-                    </div>
-                    <div class="p-6">
-                        <form id="note-form">
-                            <div class="mb-4">
-                                <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                                <input type="text" id="title" name="title" required
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                            </div>
-                            <div class="mb-4">
-                                <label for="content"
-                                    class="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                                <textarea id="content" name="content" rows="4" required
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"></textarea>
-                            </div>
-                            <div class="mb-6">
-                                <label for="tags" class="block text-sm font-medium text-gray-700 mb-1">Tags</label>
-                                <div class="flex items-center">
-                                    <i class="fas fa-tags text-gray-400 mr-2"></i>
-                                    <input type="text" id="tags" name="tags" placeholder="Separate with commas"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                                </div>
-                            </div>
-                            <div class="flex justify-end">
-                                <button type="submit" id="submit-btn"
-                                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-200">
-                                    <i class="fas fa-save mr-2"></i>
-                                    <span>Save Note</span>
-                                </button>
-                            </div>
-                        </form>
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Create Note Section -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 mb-8 overflow-hidden">
+                <div class="px-6 py-4 bg-gradient-to-r from-primary-500 to-primary-600">
+                    <h2 class="text-xl font-semibold text-white flex items-center">
+                        <i class="fas fa-plus-circle mr-3"></i>
+                        Create New Note
+                    </h2>
+                </div>
+                <div class="p-6">
+                    <form id="note-form" class="space-y-6">
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-heading text-gray-400 mr-2"></i>Title
+                            </label>
+                            <input type="text" id="title" name="title" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200"
+                                placeholder="Enter note title...">
+                        </div>
+
+                        <div>
+                            <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-align-left text-gray-400 mr-2"></i>Content
+                            </label>
+                            <textarea id="content" name="content" rows="5" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200 resize-none"
+                                placeholder="Write your note content here..."></textarea>
+                        </div>
+
+                        <div>
+                            <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-tags text-gray-400 mr-2"></i>Tags
+                            </label>
+                            <input type="text" id="tags" name="tags"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200"
+                                placeholder="Add tags separated by commas (e.g., work, personal, ideas)">
+                        </div>
+
+                        <div class="flex justify-end pt-4">
+                            <button type="submit" id="submit-btn"
+                                class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-200">
+                                <i class="fas fa-save mr-2"></i>
+                                Save Note
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notes List Section -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 bg-gradient-to-r from-gray-800 to-gray-700 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-white flex items-center">
+                        <i class="fas fa-list-ul mr-3"></i>
+                        Your Notes
+                    </h2>
+                    <span id="notes-count" class="bg-white text-gray-800 text-sm font-medium px-3 py-1 rounded-full">
+                        0 notes
+                    </span>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input type="text" id="search-notes"
+                            class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200"
+                            placeholder="Search notes by title or content...">
                     </div>
                 </div>
 
-                <!-- Notes List -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="px-6 py-4 bg-gradient-to-r from-gray-800 to-gray-700 flex justify-between items-center">
-                        <h2 class="text-lg font-semibold text-white flex items-center">
-                            <i class="fas fa-list-ul mr-2"></i> Your Notes
-                        </h2>
-                        <span id="notes-count"
-                            class="bg-white text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">0 notes</span>
-                    </div>
-                    <div class="divide-y divide-gray-100" id="notes-list">
-                        <!-- Notes will be inserted here by JavaScript -->
-                        <div class="p-6 text-center text-gray-500">
-                            <i class="fas fa-spinner fa-spin text-xl"></i>
-                            <p class="mt-2">Loading notes...</p>
-                        </div>
+                <!-- Notes Container -->
+                <div id="notes-list" class="divide-y divide-gray-100">
+                    <!-- Default loading state -->
+                    <div class="p-8 text-center text-gray-500">
+                        <i class="fas fa-sticky-note text-4xl mb-4 text-gray-300"></i>
+                        <p class="text-lg font-medium text-gray-600">No notes yet</p>
+                        <p class="text-sm text-gray-500 mt-1">Create your first note above to get started!</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="./js/utils.js"></script>
-    <script src="./js/script.js"></script>
+    <script>
+        // Global variables
+        let currentUser = null;
+        let notes = [];
+        let editingNoteId = null;
+
+        // Utility functions
+        function showMessage(message, type = 'error') {
+            const messageDiv = document.getElementById('auth-message');
+            messageDiv.textContent = message;
+            messageDiv.className = `mt-4 text-center text-sm ${type === 'error' ? 'text-red-600' : 'text-green-600'}`;
+            setTimeout(() => {
+                messageDiv.textContent = '';
+                messageDiv.className = 'mt-4 text-center text-sm';
+            }, 3000);
+        }
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Authentication functions
+        function login(username, password) {
+            // Simple demo authentication
+            if (username && password) {
+                currentUser = username;
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('app-content').classList.remove('hidden');
+                document.getElementById('user-greeting').textContent = `Hello, ${username}!`;
+                loadNotes();
+                return true;
+            }
+            return false;
+        }
+
+        function register(username, password, confirmPassword) {
+            if (!username || !password) {
+                showMessage('Please fill in all fields');
+                return false;
+            }
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match');
+                return false;
+            }
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters long');
+                return false;
+            }
+
+            showMessage('Account created successfully! Please login.', 'success');
+            showLogin();
+            return true;
+        }
+
+        function logout() {
+            currentUser = null;
+            notes = [];
+            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('app-content').classList.add('hidden');
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+        }
+
+        function showLogin() {
+            document.getElementById('login-container').classList.remove('hidden');
+            document.getElementById('register-container').classList.add('hidden');
+        }
+
+        function showRegister() {
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('register-container').classList.remove('hidden');
+        }
+
+        // Notes functions
+        function loadNotes() {
+            // Demo notes for display
+            notes = [
+                {
+                    id: '1',
+                    title: 'Welcome to Notes App',
+                    content: 'This is your first note! You can create, edit, and delete notes here.',
+                    tags: ['welcome', 'demo'],
+                    createdAt: Date.now() - 86400000,
+                    updatedAt: Date.now() - 86400000
+                }
+            ];
+            renderNotes();
+        }
+
+        function createNote(title, content, tags) {
+            const note = {
+                id: generateId(),
+                title: title.trim(),
+                content: content.trim(),
+                tags: tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [],
+                createdAt: Date.now(),
+                updatedAt: Date.now()
+            };
+
+            if (editingNoteId) {
+                // Update existing note
+                const index = notes.findIndex(n => n.id === editingNoteId);
+                if (index !== -1) {
+                    notes[index] = { ...note, id: editingNoteId, createdAt: notes[index].createdAt };
+                }
+                editingNoteId = null;
+                document.getElementById('submit-btn').innerHTML = '<i class="fas fa-save mr-2"></i>Save Note';
+            } else {
+                // Create new note
+                notes.unshift(note);
+            }
+
+            renderNotes();
+            document.getElementById('note-form').reset();
+        }
+
+        function editNote(id) {
+            const note = notes.find(n => n.id === id);
+            if (note) {
+                document.getElementById('title').value = note.title;
+                document.getElementById('content').value = note.content;
+                document.getElementById('tags').value = note.tags.join(', ');
+                editingNoteId = id;
+                document.getElementById('submit-btn').innerHTML = '<i class="fas fa-edit mr-2"></i>Update Note';
+                document.getElementById('title').focus();
+            }
+        }
+
+        function deleteNote(id) {
+            if (confirm('Are you sure you want to delete this note?')) {
+                notes = notes.filter(n => n.id !== id);
+                renderNotes();
+            }
+        }
+
+        function searchNotes(query) {
+            const filtered = notes.filter(note =>
+                note.title.toLowerCase().includes(query.toLowerCase()) ||
+                note.content.toLowerCase().includes(query.toLowerCase()) ||
+                note.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+            );
+            renderNotes(filtered);
+        }
+
+        function renderNotes(notesToRender = notes) {
+            const notesList = document.getElementById('notes-list');
+            const notesCount = document.getElementById('notes-count');
+
+            notesCount.textContent = `${notesToRender.length} ${notesToRender.length === 1 ? 'note' : 'notes'}`;
+
+            if (notesToRender.length === 0) {
+                notesList.innerHTML = `
+                    <div class="p-8 text-center text-gray-500">
+                        <i class="fas fa-sticky-note text-4xl mb-4 text-gray-300"></i>
+                        <p class="text-lg font-medium text-gray-600">No notes found</p>
+                        <p class="text-sm text-gray-500 mt-1">Try adjusting your search or create a new note!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            notesList.innerHTML = notesToRender.map(note => `
+                <div class="p-6 note-card hover:bg-gray-50 transition duration-200">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-semibold text-gray-900 line-clamp-1">${note.title}</h3>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <button onclick="editNote('${note.id}')" 
+                                class="p-2 text-gray-400 hover:text-primary-600 transition duration-200" 
+                                title="Edit note">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteNote('${note.id}')" 
+                                class="p-2 text-gray-400 hover:text-red-600 transition duration-200" 
+                                title="Delete note">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4 line-clamp-3">${note.content}</p>
+                    <div class="flex flex-wrap items-center justify-between text-sm">
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            ${note.tags.map(tag => `
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                    <i class="fas fa-tag mr-1"></i>${tag}
+                                </span>
+                            `).join('')}
+                        </div>
+                        <div class="text-gray-500 flex items-center">
+                            <i class="fas fa-clock mr-1"></i>
+                            ${formatDate(note.updatedAt)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            // Auth form toggles
+            document.getElementById('show-register-btn').addEventListener('click', showRegister);
+            document.getElementById('show-login-btn').addEventListener('click', showLogin);
+
+            // Auth forms
+            document.getElementById('login-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const username = document.getElementById('login-username').value;
+                const password = document.getElementById('login-password').value;
+
+                if (!login(username, password)) {
+                    showMessage('Please enter valid credentials');
+                }
+            });
+
+            document.getElementById('register-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const username = document.getElementById('register-username').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+
+                register(username, password, confirmPassword);
+            });
+
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', logout);
+
+            // Note form
+            document.getElementById('note-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const title = document.getElementById('title').value;
+                const content = document.getElementById('content').value;
+                const tags = document.getElementById('tags').value;
+
+                if (title.trim() && content.trim()) {
+                    createNote(title, content, tags);
+                }
+            });
+
+            // Search functionality
+            document.getElementById('search-notes').addEventListener('input', function (e) {
+                const query = e.target.value;
+                if (query.trim()) {
+                    searchNotes(query);
+                } else {
+                    renderNotes();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

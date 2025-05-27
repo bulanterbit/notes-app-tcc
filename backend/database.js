@@ -1,10 +1,13 @@
 import mysql from "mysql2/promise";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const pool = mysql.createPool({
-  user: "root",
-  password: "",
-  database: "notes_app",
-  socketPath: "/cloudsql/e-10-450704:us-central1:tccjaco",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  socketPath: process.env.DB_SOCKET_PATH,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
