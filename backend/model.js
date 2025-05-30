@@ -90,7 +90,7 @@ export class Note {
     try {
       const note = await this.findById(id, userId); // Verify ownership
       if (!note) return null;
-      //
+      
       await pool.query("DELETE FROM notes WHERE id = ? AND user_id = ?", [
         id,
         userId,
